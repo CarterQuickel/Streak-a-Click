@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+Clicker/node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.*
+
+# Build output
+/dist/
+/build/
+/.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Optional: package manager lockfiles (keep only if your team prefers them)
+# package-lock.json
+# yarn.lock
