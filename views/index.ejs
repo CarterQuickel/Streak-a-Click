@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Build your clicking streak one tap at a time." />
+  <title><%= title %> | Clicker</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav aria-label="Main navigation">
+      <a class="brand" href="/">Clicker</a>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    <section class="hero" aria-labelledby="page-title">
+    <button class="btn">Click</button>
+    <span id="clicks" style="user-select: none">0</span>
+    <div class="streakCont">
+      <div class="bars">
+          <% streak.forEach((lvl, index) => { %>
+              <progress id="progress" class="<%= lvl %>_progressBar" max="<%= (lvl*100) %>" value="0" aria-label="Streak progress">0%</progress>
+          <% }); %>
+      </div>
+      <div id="streakNum">🔥1x</div>
+    </div>
+    <form action="/upgrade" method="POST">
+      <button class="up" type="submit">Upgrade</button>
+  </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <%= new Date().getFullYear() %> Clicker</p>
+  </footer>
+
+  <script src="/js/index.js" defer></script>
+</body>
+</html>

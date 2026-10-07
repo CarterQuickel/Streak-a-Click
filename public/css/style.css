@@ -55,7 +55,6 @@ body {
   box-shadow: 0 4px 16px rgba(2, 6, 23, 0.06);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 }
 
@@ -69,6 +68,15 @@ body {
   gap: 8px;
 }
 
+.bars {
+  width: 60%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: space-between;
+}
+
 .btn {
   display: inline-block;
   margin-top: 12px;
@@ -80,17 +88,41 @@ body {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   user-select: none;
+  border: none;
 }
 
 .btn:hover {
   background: #1e40af;
-  scale: 1.1;
+  scale: 1.05;
 }
 
 .btn:active {
   background: #1e3a8a;
-  scale: 1.05;
+  scale: 1.02;
 }
+
+.up {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  border: none;
+}
+
+.up:hover {
+  background: #1e40af;
+}
+
+.up:active {
+  background: #1e3a8a;
+}
+
 
 .content {
   background: var(--card);
