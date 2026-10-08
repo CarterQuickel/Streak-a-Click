@@ -21,10 +21,10 @@
     <div class="streakCont">
       <div class="bars">
           <% streak.forEach((lvl, index) => { %>
-              <progress id="progress" class="<%= lvl %>_progressBar" max="<%= (lvl*100) %>" value="0" aria-label="Streak progress">0%</progress>
+              <progress id="progress" class="streakBar <%= lvl %>" max="<%= (lvl*100) %>" value="0" aria-label="Streak progress">0%</progress>
           <% }); %>
       </div>
-      <div id="streakNum">🔥1x</div>
+      <div id="streakNum" style="--scale: 14px;">🔥1x</div>
     </div>
     <form action="/upgrade" method="POST">
       <button class="up" type="submit">Upgrade</button>

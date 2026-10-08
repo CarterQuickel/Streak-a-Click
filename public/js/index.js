@@ -1,31 +1,48 @@
+// variables
 const button = document.querySelector('.btn');
 let clicks = 0;
 let streak = 1;
-const progressBar = document.getElementById('progress');
+let drainable = true;
+const progressBar = document.querySelectorAll(".streakBar");
+const lastBar = document.querySelectorAll(".streakBar:last-child");
 
+// click button!
 button.addEventListener('click', () => {
     clicks += (streak);
     document.getElementById('clicks').textContent = clicks;
-    progressBar.value = Math.min(progressBar.value + 7, 100);
-    if (progressBar.value >= 100) {
-        streak++;
-    }
+    progressBar.forEach((bar, index) => {
+        if (bar.classList.contains(`${streak}`)) {
+            bar.value = bar.value + 30;
+            if (bar.value >= (streak * 100)) {
+                streak++;
+            }
+        }
+    });
 });
 
+// drain streak bar
 setInterval(() => {
-    let drainable = true;
     if (drainable) {
-        progressBar.value = progressBar.value - 1;
-        if (progressBar.value <= 0) {
-            progressBar.value = 0;
-        }
-        if (progressBar.value >= 100) {
-            progressBar.value = 100;
-            drainable = false;
-        }
+        progressBar.forEach((bar, index) => {
+            if (bar.classList.contains(`${streak}`)) {
+                bar.value = bar.value - 1;
+                if (bar.value <= 0) {
+                    streak = (streak == 1 ? streak = 1 : streak - 1);
+                }
+            }
+        });
     }
 }, 50);
 
+// update streak txt
 setInterval(() => {
-    document.getElementById('streakNum').textContent = `🔥${streak}x`;
+    const streakText = document.getElementById('streakNum');
+    streakText.textContent = `🔥${streak}x`;
+    if (streak >= 2) {
+        streakText.classList.add('streaked');
+        streakText.style.setProperty('--scale', `${(streak / 2)**(streak / 20) + 14}px`);
+    } else {
+        streakText.classList.remove('streaked');
+        streakText.style.setProperty('--scale', `14px`);
+    }
 }, 50);

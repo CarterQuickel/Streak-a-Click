@@ -77,6 +77,27 @@ body {
   justify-content: space-between;
 }
 
+.bars progress {
+  width: 100%;
+}
+
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 10px;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #d4d4d4;
+  border-radius: 8px;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(to right, orange, rgb(255, 123, 0));
+  border-radius: 8px;
+}
+
 .btn {
   display: inline-block;
   margin-top: 12px;
@@ -123,6 +144,15 @@ body {
   background: #1e3a8a;
 }
 
+#streakNum.streaked {
+  color: orange;
+  font-weight: bold;
+}
+
+#streakNum.streaked {
+  font-size: var(--scale);
+  transition: font-size 0.2s ease-in-out; 
+}
 
 .content {
   background: var(--card);
