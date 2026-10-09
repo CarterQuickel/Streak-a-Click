@@ -160,6 +160,7 @@ form .up:hover {
 form .up:disabled {
   background: linear-gradient(to right, rgb(114, 114, 114), rgb(95, 95, 95)) !important;
   color: rgb(87, 87, 87);
+  cursor: default;
 }
 
 .upgradeCont {
