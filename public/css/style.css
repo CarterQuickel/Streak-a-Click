@@ -7,6 +7,7 @@
 
 * {
   box-sizing: border-box;
+  user-select: none;
 }
 
 body {
@@ -69,7 +70,7 @@ body {
 }
 
 .bars {
-  width: 60%;
+  width: 90%;
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -98,9 +99,32 @@ progress::-webkit-progress-value {
   border-radius: 8px;
 }
 
+.num {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+}
+
+#clicks {
+  display: flex;
+  justify-content: center;
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: -20px;
+}
+
+#str {
+  font-size: 13px;
+  font-weight: bold;
+  background-image: var(--color);
+  background-clip: text;
+  color: transparent;
+}
+
 .btn {
   display: inline-block;
-  margin-top: 12px;
+  margin: 12px 0;
   padding: 8px 14px;
   background: var(--accent);
   color: #fff;
@@ -110,6 +134,7 @@ progress::-webkit-progress-value {
   transition: all 0.2s ease-in-out;
   user-select: none;
   border: none;
+  height: 100px;
 }
 
 .btn:hover {
@@ -120,6 +145,21 @@ progress::-webkit-progress-value {
 .btn:active {
   background: #1e3a8a;
   scale: 1.02;
+}
+
+form .up {
+  background: linear-gradient(to right, orange, rgb(255, 123, 0));
+  color: white;
+  transition: all 0.2s ease;
+}
+
+form .up:hover {
+  background: linear-gradient(to right, rgb(230, 156, 19), rgb(255, 123, 0));
+}
+
+form .up:disabled {
+  background: linear-gradient(to right, rgb(114, 114, 114), rgb(95, 95, 95)) !important;
+  color: rgb(87, 87, 87);
 }
 
 .upgradeCont {

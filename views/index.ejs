@@ -4,34 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Build your clicking streak one tap at a time." />
-  <title><%= title %> | Clicker</title>
+  <title>Click-a-Streak</title>
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
   <header class="site-header">
     <nav aria-label="Main navigation">
-      <a class="brand" href="/">Clicker</a>
+      <a class="brand" href="/">Click-a-Streak 🔥</a>
     </nav>
   </header>
 
   <main class="site-main">
+    
     <section class="hero" aria-labelledby="page-title">
-    <button class="btn">Click</button>
-    <span id="clicks" style="user-select: none">0</span>
-    <div class="streakCont">
-      <div class="bars">
-          <% streak.forEach((lvl, index) => { %>
-              <progress id="progress" class="streakBar <%= lvl %>" data-value="<%= lvl %>" max="<%= (lvl*100) %>" value="0" aria-label="Streak progress">0%</progress>
-          <% }); %>
+      <div class="num">
+        <span id="clicks" style="user-select: none">0</span>
+        <span id="str" data-strength="<%= str %>" style="--color: linear-gradient(to right, gray, gray);">+0</span>
       </div>
-      <div id="streakNum" style="--scale: 14px;">🔥1x</div>
-    </div>
-    <div class="upgradeCont">
-      <form action="/upgrade" method="POST">
-        <button class="up" type="submit">+1 Streak</button>
-      </form>
-      <button class="up" id="drainage">-1 Drainage</button>
-    </div>
+      <button class="btn">Click</button>
+      <div class="streakCont">
+        <div class="bars">
+            <% streak.forEach((lvl, index) => { %>
+                <progress id="progress" class="streakBar <%= lvl %>" data-value="<%= lvl %>" max="<%= (lvl*100) %>" value="0" aria-label="Streak progress">0%</progress>
+            <% }); %>
+        </div>
+        <div id="streakNum" style="--scale: 14px;">🔥1x</div>
+      </div>
+      <div class="upgradeCont">
+        <form action="/upgrade" method="POST">
+          <button class="up" type="submit" id="streakUp">+1 Streak</button>
+        </form>
+        <button class="up" id="drainage">-2 Drainage (20)</button>
+        <button class="up" id="force">+2 Force (100)</button>
+      </div>
     </section>
   </main>
 
