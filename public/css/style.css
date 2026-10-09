@@ -122,6 +122,12 @@ progress::-webkit-progress-value {
   scale: 1.02;
 }
 
+.upgradeCont {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .up {
   display: inline-block;
   margin-top: 12px;
