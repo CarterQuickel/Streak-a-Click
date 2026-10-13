@@ -57,6 +57,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .hero h1 {
@@ -95,7 +96,7 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-  background: linear-gradient(to right, orange, rgb(255, 123, 0));
+  background: var(--gColor);
   border-radius: 8px;
 }
 
@@ -120,6 +121,20 @@ progress::-webkit-progress-value {
   background-image: var(--color);
   background-clip: text;
   color: transparent;
+}
+
+.btns_row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+#overclock {
+  background: linear-gradient(to right, rgb(187, 71, 152), rgb(221, 135, 135));
+}
+
+#overclock:hover {
+  scale: 1.1;
 }
 
 .btn {
@@ -147,6 +162,23 @@ progress::-webkit-progress-value {
   scale: 1.02;
 }
 
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.updata {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #6b7280;
+  border-radius: 6px;
+}
+
 form .up {
   background: linear-gradient(to right, orange, rgb(255, 123, 0));
   color: white;
@@ -171,7 +203,6 @@ form .up:disabled {
 
 .up {
   display: inline-block;
-  margin-top: 12px;
   padding: 8px 14px;
   background: var(--accent);
   color: #fff;
@@ -181,6 +212,7 @@ form .up:disabled {
   transition: all 0.2s ease-in-out;
   user-select: none;
   border: none;
+  min-width: 100px;
 }
 
 .up:hover {
@@ -189,6 +221,21 @@ form .up:disabled {
 
 .up:active {
   background: #1e3a8a;
+}
+
+.lvl {
+  font-weight: bold;
+  color: rgb(120, 219, 120);
+}
+
+.cost {
+  font-weight: bold;
+  color: rgb(219, 148, 120);
+}
+
+.current {
+  font-weight: bold;
+  color: rgb(186, 196, 243);
 }
 
 #streakNum.streaked {
