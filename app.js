@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3000;
-const IP = '172.16.3.241';
+const IP = '172.16.3.101';
 
 let streakLvl = 1;
 let strength = 1;
