@@ -5,14 +5,17 @@ let drainable = true;
 let decreaseValue = 50;
 let force = 8;
 let overclocked = false;
+let criticalChance = 0.02;
 
 // button levels
 let drainageLvl = 1;
 let forceLvl = 1;
+let criticalLvl = 1;
 
 // upgrade costs
 let drainageCost = 20;
 let forceCost = 100;
+let criticalCost = 300;
 
 //overclock
 let overclockMultiplier = 2;
@@ -26,12 +29,19 @@ const upgradeBtn = document.getElementById('streakUp');
 const strength = parseFloat(document.getElementById('str').dataset.strength);
 upgradeBtn.disabled = true;
 
+function chance() {
+    return Math.random() < (criticalChance);
+}
+
 // click button!
 button.addEventListener('click', () => {
-    clicks += (overclocked ? Math.floor((strength * streak) / overclockMultiplier) : strength * streak);
+    const chanced = chance();
+    const calc = (overclocked ? Math.floor((strength * streak) / overclockMultiplier) : strength * streak);
+    clicks += chanced ? calc * 2 : calc;
     progressBar.forEach((bar, index) => {
         if (bar.classList.contains(`${streak}`)) {
-            bar.value = (overclocked ? (bar.value + (force - overclockResistance)) : bar.value + force);
+            forceUpCalc = (overclocked ? (bar.value + (force - overclockResistance)) : bar.value + force);
+            bar.value = chanced ? forceUpCalc * 1.5 : forceUpCalc;
             if (bar.value >= (streak * 100)) {
                 if (bar == lastBar) {
                     drainable = false;
@@ -83,10 +93,14 @@ setInterval(() => {
     }
     document.querySelectorAll('.updata').forEach((ud) => {
         const drain = ud.classList.contains("drainage");
-        ud.querySelector(".lvl").textContent = `Lvl. ${drain ? drainageLvl : forceLvl}`;
-        ud.querySelector(".cost").textContent = `${drain ? drainageCost : forceCost} clicks`;
-        ud.querySelector(".current").textContent = `${drain ? Math.round((100 / decreaseValue) * -10) / 10 : force} ${drain ? 'str/s' : 'str'}`;
+        const isforce = ud.classList.contains("force");
+        ud.querySelector(".lvl").textContent = `Lvl. ${drain ? drainageLvl : isforce ? forceLvl : criticalLvl}`;
+        ud.querySelector(".cost").textContent = `${drain ? drainageCost : isforce ? forceCost : criticalCost} clicks`;
+        ud.querySelector(".current").textContent = `${drain ? Math.round((100 / decreaseValue) * -10) / 10 : isforce} ${drain ? 'str/s' : 'str'}`;
     });
+    document.getElementById("drainage").disabled = (clicks < drainageCost ? true : false);
+    document.getElementById("force").disabled = (clicks < forceCost ? true : false);
+    document.getElementById("critical").disabled = (clicks < criticalCost ? true : false);
 }, 50);
 
 //upgrade drain level
@@ -106,6 +120,16 @@ document.getElementById("force").addEventListener('click', () => {
         clicks = clicks - forceCost;
         forceLvl++;
         forceCost += 75;
+    }
+});
+
+//upgrade force level
+document.getElementById("critical").addEventListener('click', () => {
+    if (clicks >= criticalCost) {
+        criticalChance += 0.01;
+        clicks = clicks - criticalCost;
+        criticalLvl++;
+        criticalCost += 80;
     }
 });
 
