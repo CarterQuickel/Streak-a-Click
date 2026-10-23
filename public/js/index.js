@@ -7,6 +7,11 @@ let force = 8;
 let overclocked = false;
 let criticalChance = 0.02;
 
+//Click rate limit
+const MAX_CLICKS_PER_SECOND = 25;
+const CLICK_WINDOW_MS = 1000;
+let recentClicks = [];
+
 // button levels
 let drainageLvl = 1;
 let forceLvl = 1;
@@ -35,6 +40,14 @@ function chance() {
 
 // click button!
 button.addEventListener('click', () => {
+    const now = Date.now();
+    recentClicks = recentClicks.filter(
+        timestamp => now - timestamp < CLICK_WINDOW_MS
+    );
+    if(recentClicks.length >= MAX_CLICKS_PER_SECOND) {
+        return;
+    }
+    recentClicks.push(now);
     const chanced = chance();
     const calc = (overclocked ? Math.floor((strength * streak) / overclockMultiplier) : strength * streak);
     clicks += chanced ? calc * 2 : calc;
@@ -112,6 +125,12 @@ setInterval(() => {
         timeFreezeBuyUpgrade.textContent = `Unlock - ${timeFreezeCost} clicks`
     }
     timeFreezeDurationText.textContent = timeFreezeDuration.toFixed(1);
+
+    //CPS
+    document.getElementById('cps').textContent =
+    recentClicks.filter(
+        timestamp => Date.now() - timestamp < CLICK_WINDOW_MS
+    ).length;
 }, 50);
 
 //upgrade drain level
