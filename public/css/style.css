@@ -265,3 +265,8 @@ form .up:disabled {
   text-align: center;
   padding: 24px;
 }
+
+#mainBTN {
+-webkit-user-select: none;
+user-select: none;
+}
