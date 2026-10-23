@@ -56,7 +56,7 @@ button.addEventListener('click', () => {
 
 // drain streak bar
 setInterval(() => {
-    if (drainable) {
+    if (drainable && !timeFreezeActive) {
         progressBar.forEach((bar, index) => {
             if (bar.classList.contains(`${streak}`)) {
                 //decrease line
@@ -101,6 +101,17 @@ setInterval(() => {
     document.getElementById("drainage").disabled = (clicks < drainageCost ? true : false);
     document.getElementById("force").disabled = (clicks < forceCost ? true : false);
     document.getElementById("critical").disabled = (clicks < criticalCost ? true : false);
+
+    //Time Freeze UI
+    timeFreezeBuyUpgrade.disabled = timeFreezeUnlocked ? (timeFreezeDuration >= timeFreezeMaxDuration || clicks < timeFreezeUpgradeCost)
+    : clicks < timeFreezeCost;
+
+    timeFreezeActivate.disabled = !timeFreezeUnlocked || timeFreezeActive;
+
+    if (!timeFreezeUnlocked) {
+        timeFreezeBuyUpgrade.textContent = `Unlock - ${timeFreezeCost} clicks`
+    }
+    timeFreezeDurationText.textContent = timeFreezeDuration.toFixed(1);
 }, 50);
 
 //upgrade drain level
@@ -133,6 +144,94 @@ document.getElementById("critical").addEventListener('click', () => {
     }
 });
 
+// Time Freeze Upgrade
+let timeFreezeUnlocked = false;
+let timeFreezeDuration = 2;
+let timeFreezeMaxDuration = 69696969696969696969696969;
+let timeFreezeCost = 500;
+let timeFreezeUpgradeCost = 1000;
+let timeFreezeUpgradeCostExp = 1.2
+let timeFreezeActive = false;
+let timeFreezeCooldown = false;
+const timeFreezeCooldownDuration = 60 * 1000
+function roundtoNearestThousand(value) {
+return Math.round(value /1000) * 1000;
+}
+
+const timeFreezeBuyUpgrade = document.getElementById('timeFreezeBuyUpgrade');
+const timeFreezeActivate = document.getElementById('timeFreezeActivate');
+const timeFreezeDurationText = document.getElementById('timeFreezeDuration');
+const timeFreezeStatus = document.getElementById('timeFreezeStatus');
+
+timeFreezeBuyUpgrade.addEventListener('click', () => {
+if (!timeFreezeUnlocked) {
+    if (clicks < timeFreezeCost) return;
+
+    clicks -= timeFreezeCost;
+    timeFreezeUnlocked = true;
+
+    timeFreezeStatus.textContent = 'Ready';
+    timeFreezeBuyUpgrade.textContent = `Upgrade - ${timeFreezeUpgradeCost} clicks`;
+} else {
+    if (timeFreezeDuration >= timeFreezeMaxDuration) return;
+    if (clicks < timeFreezeUpgradeCost) return;
+    clicks -= timeFreezeUpgradeCost;
+
+    timeFreezeDuration = Math.min(
+        timeFreezeDuration + 0.5, 
+        timeFreezeMaxDuration
+    );
+
+    timeFreezeUpgradeCost = roundtoNearestThousand(timeFreezeUpgradeCost ** timeFreezeUpgradeCostExp);
+
+    timeFreezeBuyUpgrade.textContent = 
+    timeFreezeDuration >= timeFreezeMaxDuration ? 'Maximum Level' : `Upgrade - ${timeFreezeUpgradeCost} clicks`;
+
+}
+
+timeFreezeDurationText.textContent = timeFreezeDuration.toFixed(1); 
+
+});
+timeFreezeActivate.addEventListener('click', () => {
+    if (!timeFreezeUnlocked || timeFreezeActive || timeFreezeCooldown) {
+        return;
+    }
+    timeFreezeActive = true;
+    timeFreezeCooldown = true;
+    timeFreezeActivate.disabled = true;
+    timeFreezeStatus.textContent = 'Time Frozen!';
+    setTimeout(() => {
+        timeFreezeActive = false;
+        timeFreezeStatus.textContent = 'On cooldown (1:00)';
+    }, timeFreezeDuration * 1000);
+    let cooldownRemaining = timeFreezeCooldownDuration;
+    const cooldownInterval = setInterval(() => {
+        cooldownRemaining -= 1000;
+        if (cooldownRemaining <= 0) {
+            clearInterval(cooldownInterval);
+            timeFreezeCooldown = false;
+            timeFreezeActivate.disabled = false;
+            timeFreezeStatus.textContent = 'Ready';
+            return;
+        }
+        const minutes = Math.floor(cooldownRemaining / 60000);
+        const seconds = Math.floor((cooldownRemaining % 60000) / 1000);
+
+        timeFreezeStatus.textContent =
+            `On cooldown (${minutes}:${String(seconds).padStart(2, '0')})`;
+    }, 1000);
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key.toLowerCase() === 'f') {
+        if (event.repeat) return;
+
+        if (timeFreezeUnlocked && !timeFreezeActive) {
+            timeFreezeActivate.click();
+        }
+    }
+});
+
 //overclock
 document.getElementById("overclock").addEventListener('click', () => {
     overclocked = overclocked ? false : true;
@@ -152,3 +251,4 @@ document.getElementById("overclock").addEventListener('click', () => {
         document.getElementById("mainBTN").style.background = '#2563eb';
     }
 });
+
